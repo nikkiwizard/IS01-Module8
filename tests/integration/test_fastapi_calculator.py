@@ -152,3 +152,33 @@ def test_divide_by_zero_api(client):
     # Assert that the 'error' field contains the correct error message
     assert "Cannot divide by zero!" in response.json()['error'], \
         f"Expected error message 'Cannot divide by zero!', got '{response.json()['error']}'"
+
+
+# ---------------------------------------------
+# Test Function: test_power_api
+# ---------------------------------------------
+
+def test_power_api(client):
+    response = client.post('/power', json={'a': 2, 'b': 8})
+    assert response.status_code == 200
+    assert response.json()['result'] == 256
+
+
+# ---------------------------------------------
+# Test Function: test_modulus_api
+# ---------------------------------------------
+
+def test_modulus_api(client):
+    response = client.post('/modulus', json={'a': 7, 'b': 3})
+    assert response.status_code == 200
+    assert response.json()['result'] == 1
+
+
+# ---------------------------------------------
+# Test Function: test_int_divide_api
+# ---------------------------------------------
+
+def test_int_divide_api(client):
+    response = client.post('/int_divide', json={'a': 7, 'b': 3})
+    assert response.status_code == 200
+    assert response.json()['result'] == 2

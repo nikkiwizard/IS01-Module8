@@ -2,7 +2,7 @@
 
 import pytest  # Import the pytest framework for writing and running tests
 from typing import Union  # Import Union for type hinting multiple possible types
-from app.operations import add, subtract, multiply, divide  # Import the calculator functions from the operations module
+from app.operations import add, subtract, multiply, divide, power, modulus, int_divide  # Import the calculator functions from the operations module
 
 # Define a type alias for numbers that can be either int or float
 Number = Union[int, float]
@@ -202,6 +202,98 @@ def test_divide(a: Number, b: Number, expected: float) -> None:
     
     # Assert that the result of divide(a, b) matches the expected value
     assert result == expected, f"Expected divide({a}, {b}) to be {expected}, but got {result}"
+
+
+# ---------------------------------------------
+# Unit Tests for the 'power' Function
+# ---------------------------------------------
+
+@pytest.mark.parametrize(
+    "a, b, expected",
+    [
+        (2, 3, 8),
+        (5, 0, 1),
+        (2.5, 2, 6.25),
+        (-2, 3, -8),
+        (0, 5, 0),
+    ],
+    ids=[
+        "power_positive_integers",
+        "power_exponent_zero",
+        "power_float_base",
+        "power_negative_base",
+        "power_zero_base",
+    ]
+)
+def test_power(a: Number, b: Number, expected: Number) -> None:
+    result = power(a, b)
+    assert result == expected, f"Expected power({a}, {b}) to be {expected}, but got {result}"
+
+
+# ---------------------------------------------
+# Unit Tests for the 'modulus' Function
+# ---------------------------------------------
+
+@pytest.mark.parametrize(
+    "a, b, expected",
+    [
+        (7, 3, 1),
+        (10, 5, 0),
+        (7.5, 2, 1.5),
+        (-7, 3, 2),
+        (7, -3, -2),
+    ],
+    ids=[
+        "modulus_positive_integers",
+        "modulus_exact_division",
+        "modulus_float",
+        "modulus_negative_dividend",
+        "modulus_negative_divisor",
+    ]
+)
+def test_modulus(a: Number, b: Number, expected: Number) -> None:
+    result = modulus(a, b)
+    assert result == expected, f"Expected modulus({a}, {b}) to be {expected}, but got {result}"
+
+
+# ---------------------------------------------
+# Unit Tests for the 'int_divide' Function
+# ---------------------------------------------
+
+@pytest.mark.parametrize(
+    "a, b, expected",
+    [
+        (7, 3, 2),
+        (10, 5, 2),
+        (7.5, 3, 2.0),
+        (-7, 3, -3),
+        (7, -3, -3),
+    ],
+    ids=[
+        "int_divide_positive_integers",
+        "int_divide_exact_division",
+        "int_divide_float_dividend",
+        "int_divide_negative_dividend",
+        "int_divide_negative_divisor",
+    ]
+)
+def test_int_divide(a: Number, b: Number, expected: Number) -> None:
+    result = int_divide(a, b)
+    assert result == expected, f"Expected int_divide({a}, {b}) to be {expected}, but got {result}"
+
+
+def test_modulus_by_zero() -> None:
+    with pytest.raises(ValueError) as excinfo:
+        modulus(7, 0)
+    assert "Cannot mod by zero!" in str(excinfo.value), \
+        f"Expected error message 'Cannot mod by zero!', but got '{excinfo.value}'"
+
+
+def test_int_divide_by_zero() -> None:
+    with pytest.raises(ValueError) as excinfo:
+        int_divide(7, 0)
+    assert "Cannot divide by zero!" in str(excinfo.value), \
+        f"Expected error message 'Cannot divide by zero!', but got '{excinfo.value}'"
 
 
 # ---------------------------------------------

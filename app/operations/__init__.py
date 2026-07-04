@@ -118,3 +118,76 @@ def divide(a: Number, b: Number) -> float:
     # Perform division of a by b and return the result as a float
     result = a / b
     return result
+
+
+def power(a: Number, b: Number) -> Number:
+    """
+    Raise the first number to the power of the second number.
+
+    Parameters:
+    - a (int or float): The base value.
+    - b (int or float): The exponent.
+
+    Returns:
+    - int or float: The result of a raised to the power of b.
+
+    Example:
+    >>> power(2, 3)
+    8
+    >>> power(2.0, 3)
+    8.0
+    """
+    result = a ** b
+    return result
+
+
+def modulus(a: Number, b: Number) -> Number:
+    """
+    Calculate the remainder of dividing the first number by the second.
+
+    Parameters:
+    - a (int or float): The dividend.
+    - b (int or float): The divisor.
+
+    Returns:
+    - int or float: The remainder of a divided by b.
+
+    Raises:
+    - ValueError: If b is zero, as modulus by zero is undefined.
+
+    Example:
+    >>> modulus(7, 3)
+    1
+    >>> modulus(7.5, 2)
+    1.5
+    """
+    if b == 0:
+        raise ValueError("Cannot mod by zero!")
+    result = a % b
+    return result
+
+
+def int_divide(a: Number, b: Number) -> Number:
+    """
+    Perform integer division of the first number by the second.
+
+    Parameters:
+    - a (int or float): The dividend.
+    - b (int or float): The divisor.
+
+    Returns:
+    - int or float: The integer division result using floor division.
+
+    Raises:
+    - ValueError: If b is zero, as integer division by zero is undefined.
+
+    Example:
+    >>> int_divide(7, 3)
+    2
+    >>> int_divide(7.5, 3)
+    2.0
+    """
+    if b == 0:
+        raise ValueError("Cannot divide by zero!")
+    result = a // b
+    return result
